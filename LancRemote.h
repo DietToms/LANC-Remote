@@ -9,7 +9,7 @@ enum LancCommand {
     CMD_RECORD  = 0xFB
 };
 
-class LancMaster {
+class LancRemote {
 private:
     uint8_t _pin;
     uint32_t _lastFrameTimeUs;
@@ -22,7 +22,7 @@ private:
     void sendFrame(const uint8_t* frame);
 
 public:
-    LancMaster(uint8_t pin);
+    LancRemote(uint8_t pin);
     
     // Initializes pins and broadcasts the wake-up sequence
     void begin();

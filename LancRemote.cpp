@@ -1,6 +1,6 @@
 #include "LancRemote.h"
 
-LancMaster::LancMaster(uint8_t pin) {
+LancRemote::LancRemote(uint8_t pin) {
     _pin = pin;
     _lastFrameTimeUs = 0;
 
@@ -15,7 +15,7 @@ LancMaster::LancMaster(uint8_t pin) {
     _currentFrame[7] = 0xFF;
 }
 
-void LancMaster::begin() {
+void LancRemote::begin() {
     pinMode(_pin, OUTPUT);
     digitalWrite(_pin, HIGH); // Bus idles HIGH
     
@@ -29,17 +29,17 @@ void LancMaster::begin() {
     }
 }
 
-void LancMaster::setCommand(LancCommand cmd) {
+void LancRemote::setCommand(LancCommand cmd) {
     _currentFrame[4] = (uint8_t)cmd;
 }
 
-void LancMaster::setCustomPayloadByte(uint8_t byteIndex, uint8_t hexValue) {
+void LancRemote::setCustomPayloadByte(uint8_t byteIndex, uint8_t hexValue) {
     if (byteIndex < 8) {
         _currentFrame[byteIndex] = hexValue;
     }
 }
 
-void LancMaster::sendByte(uint8_t b) {
+void LancRemote::sendByte(uint8_t b) {
     // Disable interrupts to prevent background OS tasks (WiFi, USB CDC, timers) 
     // from stretching the 104us bit-banging window.
     noInterrupts();
@@ -59,13 +59,13 @@ void LancMaster::sendByte(uint8_t b) {
     interrupts();
 }
 
-void LancMaster::sendFrame(const uint8_t* frame) {
+void LancRemote::sendFrame(const uint8_t* frame) {
     for (int i = 0; i < 8; i++) {
         sendByte(frame[i]);
     }
 }
 
-void LancMaster::loop() {
+void LancRemote::loop() {
     uint32_t currentUs = micros();
     
     // Evaluate if it is time to clock out the next video frame.
