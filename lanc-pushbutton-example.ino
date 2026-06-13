@@ -6,7 +6,7 @@
  * - D2: Connect to a momentary pushbutton. Connect the other side to GND.
  */
 
-#include "LancMaster.h"
+#include "LancRemote.h"
 
 #define LANC_TX_PIN 9
 #define BUTTON_PIN  2
